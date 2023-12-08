@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 
-const register = (req: Request, res: Response) => {
+const updateUserById = async (req: Request, res: Response) => {
   try {
-    res.send("Login");
+    const id = req.params;
+    console.log(id);
+    res.send("Actualuiando Usuario");
   } catch (error) {
     res
       .status(500)
@@ -10,4 +12,4 @@ const register = (req: Request, res: Response) => {
   }
 };
 
-export { register };
+export { updateUserById };
