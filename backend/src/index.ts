@@ -1,10 +1,18 @@
 import { APP } from "./app";
+import { sequelize } from "./config/db.config";
+import { syncModel } from "./utils/sync.model.utils";
 
-const PORT_SERVER: number = parseInt(process.env.PORT_SERVER || "");
-const PORT_SECUNDARY: number = 4000;
+const PORT: number = parseInt(process.env.PORT_SERVER || "4000");
 
-const PORT: number = PORT_SERVER || PORT_SECUNDARY;
-
-APP.listen(PORT, () =>
-  console.log(`SERVIDOR ESCUCHANDO EN EL PUERTO: ${PORT}`),
-);
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Conexion exitosa con la base de datos");
+    syncModel();
+    APP.listen(PORT, () =>
+      console.log(`SERVIDOR ESCUCHANDO EN EL PUERTO: ${PORT}`)
+    );
+  })
+  .catch((error: any) => {
+    console.error("No se pudo conectar a la base de datos:", error);
+  });

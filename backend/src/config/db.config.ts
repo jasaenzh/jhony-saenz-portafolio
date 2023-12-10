@@ -10,7 +10,7 @@ if (!DB_USER || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
   );
 }
 
-const connectDB = new Sequelize(
+const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
   {
     logging: false,
@@ -18,6 +18,6 @@ const connectDB = new Sequelize(
   }
 );
 
-connectDB.query("SET TIMEZONE TO 'America/Bogota';");
+sequelize.query("SET TIMEZONE TO 'America/Bogota';");
 
-export { connectDB };
+export { sequelize };

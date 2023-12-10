@@ -1,9 +1,15 @@
 import { Request, Response } from "express";
 import { AuthType } from "../schemas/auth.schema";
+import { registerServiceNewUser } from "../services/auth.services";
 
-const register = (req: Request<unknown, unknown, AuthType>, res: Response) => {
+const register = async (
+  req: Request<unknown, unknown, AuthType>,
+  res: Response
+) => {
   try {
-    res.send("Login");
+    let body = req.body;
+    const registerNewUser = registerServiceNewUser(body);
+    res.status(200).json(registerNewUser);
   } catch (error) {
     res
       .status(500)

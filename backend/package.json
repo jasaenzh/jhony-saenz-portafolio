@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn ./src/index.ts",
-    "lint": "eslint \"*/**/*.{js,ts,tsx}\" --quiet --fix",
     "build": "tsc"
   },
   "keywords": [],
@@ -18,8 +17,6 @@
     "@types/multer": "^1.4.11",
     "@types/pg": "^8.10.9",
     "@types/sequelize": "^4.28.19",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
   },
