@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const registerShcema = z.object({
+const CreateAuthSchema = z.object({
   body: z.object({
     email: z
       .string()
@@ -12,7 +12,7 @@ const registerShcema = z.object({
   }),
 });
 
-const updateSchema = z.object({
+const UpdateAuthSchema = z.object({
   body: z.object({
     email: z
       .string()
@@ -25,4 +25,6 @@ const updateSchema = z.object({
   }),
 });
 
-export { registerShcema, updateSchema };
+export { CreateAuthSchema, UpdateAuthSchema };
+
+export type AuthType = z.infer<typeof CreateAuthSchema>["body"];

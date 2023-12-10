@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
+import { AuthType } from "../schemas/auth.schema";
 
-const register = (req: Request, res: Response) => {
+const register = (req: Request<unknown, unknown, AuthType>, res: Response) => {
   try {
     res.send("Login");
   } catch (error) {
