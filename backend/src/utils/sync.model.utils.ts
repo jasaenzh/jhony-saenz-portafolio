@@ -1,8 +1,8 @@
-//import User from "../models/user.model";
+import User from "../models/user.model";
 
 const syncModel = async () => {
   try {
-    //await User.sync({ alter: true });
+    await User.sync({ alter: true });
     console.log("Modelos sincronizados correctamente con la base de datos.");
   } catch (error) {
     console.error(

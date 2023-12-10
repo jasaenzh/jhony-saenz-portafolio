@@ -13,14 +13,13 @@ const schemaValidation =
       });
       next();
     } catch (error) {
-      console.log(error);
       if (error instanceof ZodError) {
         return res.status(400).json(
           error.issues.map((issue) => ({
             code: issue.code,
             path: issue.path,
             message: issue.message,
-          })),
+          }))
         );
       }
       res

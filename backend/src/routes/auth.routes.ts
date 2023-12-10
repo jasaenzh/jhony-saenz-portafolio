@@ -1,10 +1,18 @@
 import { Router } from "express";
-import { register } from "../controllers/auth.controllers";
+import { login, register } from "../controllers/auth.controllers";
 import { schemaValidation } from "../middlewares/schemaValidation.middleware";
-import { CreateAuthSchema } from "../schemas/auth.schema";
+import { CreateAuthSchema, LoginAuthSchema } from "../schemas/auth.schema";
+import { upload } from "../middlewares/multer.middleware";
 
 const authRouter = Router();
 
-authRouter.post("/register", schemaValidation(CreateAuthSchema), register);
+authRouter.post(
+  "/register",
+  upload.single("image"),
+  schemaValidation(CreateAuthSchema),
+  register
+);
+
+authRouter.post("/login", schemaValidation(LoginAuthSchema), login);
 
 export { authRouter };

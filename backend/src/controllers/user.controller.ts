@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
+import { findAllUsers } from "../services/user.services";
 
 const getUsers = async (req: Request, res: Response) => {
   try {
-    res.send("Estoy en getUsers");
+    const users = await findAllUsers();
+    res.status(200).json(users);
   } catch (error) {
     res
       .status(500)
@@ -23,7 +25,6 @@ const getUserById = async (req: Request, res: Response) => {
 const updateUserById = async (req: Request, res: Response) => {
   try {
     const id = req.params;
-    console.log(id);
     res.send("Actualuiando Usuario");
   } catch (error) {
     res

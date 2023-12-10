@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
-import { AuthType } from "../schemas/auth.schema";
-import { registerServiceNewUser } from "../services/auth.services";
+import { AuthType, LoginType } from "../schemas/auth.schema";
+import {
+  loginServiceUser,
+  registerServiceNewUser,
+} from "../services/auth.services";
+import { uploadFileCloudinary } from "../services/uploadFileCloudinary.services";
 
 const register = async (
   req: Request<unknown, unknown, AuthType>,
@@ -8,7 +12,12 @@ const register = async (
 ) => {
   try {
     let body = req.body;
-    const registerNewUser = registerServiceNewUser(body);
+    const pathCloudinary = req.file ? req.file?.path : undefined;
+    const urlCloudinary = await uploadFileCloudinary(`${pathCloudinary}`);
+    if (urlCloudinary) {
+      body = { ...body, image: urlCloudinary };
+    }
+    const registerNewUser = await registerServiceNewUser(body);
     res.status(200).json(registerNewUser);
   } catch (error) {
     res
@@ -17,4 +26,19 @@ const register = async (
   }
 };
 
-export { register };
+const login = async (
+  req: Request<unknown, unknown, LoginType>,
+  res: Response
+) => {
+  try {
+    const body = req.body;
+    const loginUser = await loginServiceUser(body);
+    res.status(200).json(loginUser);
+  } catch (error) {
+    res
+      .status(500)
+      .json([{ code: "Controller Server", message: "Error en el servidor" }]);
+  }
+};
+
+export { register, login };

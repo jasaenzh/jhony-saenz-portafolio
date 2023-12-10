@@ -1,7 +1,7 @@
 import { AuthInterface } from "../interfaces/auth.interface";
 import { UserInterface } from "../interfaces/user.interface";
 import User from "../models/user.model";
-import { AuthType } from "../schemas/auth.schema";
+import { AuthType, LoginType } from "../schemas/auth.schema";
 import { encrypt, verified } from "../utils/hashPwd.handle";
 import { generateToken } from "../utils/jwt.handle";
 
@@ -16,10 +16,6 @@ const registerServiceNewUser = async ({
   password,
   aboutMe,
 }: AuthType) => {
-  if (!firstName || !lastName || !birthdate || !email || !password) {
-    throw new Error("Falta informacion");
-  }
-
   const findUser = await User.findOne({ where: { email: email } });
 
   if (findUser) {
@@ -51,11 +47,7 @@ const registerServiceNewUser = async ({
   return newUser;
 };
 
-const loginServiceUser = async ({ email, password }: AuthInterface) => {
-  if (!email || !password) {
-    throw new Error("Falta informacion");
-  }
-
+const loginServiceUser = async ({ email, password }: LoginType) => {
   const findUser = await User.findOne({ where: { email: email } });
 
   if (!findUser) {
