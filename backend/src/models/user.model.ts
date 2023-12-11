@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/db.config";
 import { UserInterface, UserRole } from "../interfaces/user.interface";
+import Skill from "./skill.model";
 
 interface UserModel extends Model, Omit<UserInterface, "id"> {
   addSkills(skills: any): unknown;
@@ -58,5 +59,8 @@ const User = sequelize.define<UserModel>(
     timestamps: true,
   }
 );
+
+User.belongsToMany(Skill, { through: "UserSkill" });
+Skill.belongsToMany(User, { through: "UserSkill" });
 
 export default User;

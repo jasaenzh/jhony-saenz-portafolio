@@ -20,6 +20,7 @@ export const CreateAuthSchema = z.object({
     password: z
       .string()
       .min(6, "La cadena debe contener al menos 6 caracteres"),
+    SkillId: z.string().optional(),
   }),
 });
 

@@ -12,12 +12,14 @@ const register = async (
 ) => {
   try {
     let body = req.body;
+    const { SkillId } = req.body;
     const pathCloudinary = req.file ? req.file?.path : undefined;
     const urlCloudinary = await uploadFileCloudinary(`${pathCloudinary}`);
     if (urlCloudinary) {
       body = { ...body, image: urlCloudinary };
     }
     const registerNewUser = await registerServiceNewUser(body);
+    if (SkillId && SkillId.length > 0) await registerNewUser.addSkills(SkillId);
     res.status(200).json(registerNewUser);
   } catch (error) {
     res

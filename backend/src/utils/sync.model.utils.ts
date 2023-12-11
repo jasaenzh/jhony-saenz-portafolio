@@ -1,8 +1,8 @@
-import User from "../models/user.model";
+import { sequelize } from "../config/db.config";
 
 const syncModel = async () => {
   try {
-    await User.sync({ alter: true });
+    await sequelize.sync({ alter: true });
     console.log("Modelos sincronizados correctamente con la base de datos.");
   } catch (error) {
     console.error(
