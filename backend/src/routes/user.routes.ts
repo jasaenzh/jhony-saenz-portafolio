@@ -1,13 +1,18 @@
 import { Router } from "express";
-import { getUsers, updateUserById } from "../controllers/user.controller";
 import { schemaValidation } from "../middlewares/schemaValidation.middleware";
-import { UpdateUserSchema } from "../schemas/user.schemas";
+import { FindUserById, UpdateUserSchema } from "../schemas/user.schemas";
+import {
+  delegteUserById,
+  getUserById,
+  getUsers,
+  updateUserById,
+} from "../controllers/user.controller";
 
 const userRouter = Router();
 
 userRouter.get("/", getUsers);
-userRouter.get("/:id");
+userRouter.get("/:id", schemaValidation(FindUserById), getUserById);
 userRouter.put("/:id", schemaValidation(UpdateUserSchema), updateUserById);
-userRouter.delete("/:id");
+userRouter.delete("/:id", schemaValidation(FindUserById), delegteUserById);
 
 export { userRouter };

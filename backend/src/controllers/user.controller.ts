@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { findAllUsers } from "../services/user.services";
+import {
+  findAllUsers,
+  findUserAndDeleteByIdController,
+  findUserAndUpdateByIdController,
+  findUserByIdController,
+} from "../services/user.services";
+import { BodyUserType, ParamsUserType } from "../schemas/user.schemas";
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -12,9 +18,13 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-const getUserById = async (req: Request, res: Response) => {
+const getUserById = async (req: Request<ParamsUserType>, res: Response) => {
   try {
-    res.send("Estoy en getUser");
+    const { id } = req.params;
+    const user = await findUserByIdController({ id });
+    res
+      .status(typeof user === "string" ? 404 : 200)
+      .json(typeof user === "string" ? { message: user } : user);
   } catch (error) {
     res
       .status(500)
@@ -22,10 +32,17 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-const updateUserById = async (req: Request, res: Response) => {
+const updateUserById = async (
+  req: Request<ParamsUserType, unknown, BodyUserType>,
+  res: Response
+) => {
   try {
-    const id = req.params;
-    res.send("Actualuiando Usuario");
+    const bodyUser = req.body;
+    const { id } = req.params;
+    const user = await findUserAndUpdateByIdController({ id }, bodyUser);
+    res
+      .status(typeof user === "string" ? 404 : 200)
+      .json(typeof user === "string" ? { message: user } : user);
   } catch (error) {
     res
       .status(500)
@@ -33,9 +50,11 @@ const updateUserById = async (req: Request, res: Response) => {
   }
 };
 
-const delegteUserById = async (req: Request, res: Response) => {
+const delegteUserById = async (req: Request<ParamsUserType>, res: Response) => {
   try {
-    res.send("Estoy en deleteUser");
+    const { id } = req.params;
+    const userDelete = await findUserAndDeleteByIdController({ id });
+    res.status(200).json({ message: userDelete });
   } catch (error) {
     res
       .status(500)
