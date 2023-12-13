@@ -1,12 +1,8 @@
-//import { CreateSkillDTO } from "../schemas/createSkill.dto";
-//import { UpdateSkillDTO } from "../schemas/updateSkill.dto";
 import { SkillInterface } from "../interfaces/skill.interface";
 import Skill from "../models/skill.model";
-import { CreateSkillType, IdSkillParamsType } from "../schemas/skill.schema";
+import { CreateSkillType, IdSkillParamsType, UpdateSkillBodyType } from "../schemas/skill.schema";
 
-const insertSkill = async (
-  bodySkill: CreateSkillType
-): Promise<SkillInterface> => {
+const insertSkill = async (bodySkill: CreateSkillType): Promise<SkillInterface> => {
   const { nameSkill, description, image } = bodySkill;
 
   const newSkill = await Skill.create({
@@ -23,9 +19,7 @@ const findAllSkills = async (): Promise<SkillInterface[]> => {
   return skills;
 };
 
-const findByIdSkill = async ({
-  id,
-}: IdSkillParamsType): Promise<SkillInterface | string> => {
+const findByIdSkill = async ({ id, }: IdSkillParamsType): Promise<SkillInterface | string> => {
   const findSkill = await Skill.findOne({ where: { id: id } });
 
   if (!findSkill) {
@@ -35,10 +29,7 @@ const findByIdSkill = async ({
   return findSkill;
 };
 
-const findByIdAndUpdateSkill = async (
-  { id }: IdSkillParamsType,
-  bodySkill: CreateSkillType
-): Promise<SkillInterface | string> => {
+const findByIdAndUpdateSkill = async ({ id }: IdSkillParamsType, bodySkill: UpdateSkillBodyType): Promise<SkillInterface | string> => {
   const findSkill = await Skill.findOne({ where: { id: id } });
 
   if (!findSkill) {
@@ -76,13 +67,7 @@ const findByIdAndDeleteSkill = async ({
     return "No se pudo eliminar el registro";
   }
 
-  return "Se ha elimidado el Skill de manera correcta";
+  return "Se ha elimidado el Skill de forma correcta";
 };
 
-export {
-  insertSkill,
-  findAllSkills,
-  findByIdSkill,
-  findByIdAndUpdateSkill,
-  findByIdAndDeleteSkill,
-};
+export { insertSkill, findAllSkills, findByIdSkill, findByIdAndUpdateSkill, findByIdAndDeleteSkill, };

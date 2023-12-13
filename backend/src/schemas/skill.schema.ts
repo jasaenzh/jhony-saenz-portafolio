@@ -3,9 +3,9 @@ import { optional, z } from "zod";
 export const CreateSkillSchema = z.object({
   body: z.object({
     nameSkill: z
-      .string()
+      .string({ required_error: "Nombre del Skill es requerido" })
       .min(3, "El nombre debe de contener al menos 3 caracteres"),
-    description: z.string(),
+    description: z.string({ required_error: "Descripcion es requerida" }),
     image: z.string().optional(),
   }),
 });
