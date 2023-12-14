@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { findAllProjects, findProjectById, findProjectByIdAndDelete, findProjectByIdAndUpdate, insertProject } from "../services/project.services";
-import { IdProjectParamsType, UpdateProjectBodyType } from "../schemas/project.schema";
+import { CreateProjectType, IdProjectParamsType, UpdateProjectBodyType } from "../schemas/project.schema";
 
 const postProject = async (req: Request, res: Response) => {
   try {

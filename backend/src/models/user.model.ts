@@ -2,6 +2,8 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/db.config";
 import { UserInterface, UserRole } from "../interfaces/user.interface";
 import Skill from "./skill.model";
+import Project from "./project.model";
+import Experience from "./experience.model";
 
 interface UserModel extends Model, Omit<UserInterface, "id"> {
   addSkills(skills: any): unknown;
@@ -60,7 +62,30 @@ const User = sequelize.define<UserModel>(
   }
 );
 
-User.belongsToMany(Skill, { through: "UserSkill" });
-Skill.belongsToMany(User, { through: "UserSkill" });
+User.belongsToMany(Skill, {
+  through: "UserSkill",
+  foreignKey: "userId",
+  otherKey: 'skilltId',
+});
+Skill.belongsToMany(User, {
+  through: "UserSkill",
+  foreignKey: "skillId",
+  otherKey: 'userId',
+});
+
+
+User.hasMany(Project, {
+  foreignKey: 'userId',
+})
+Project.belongsTo(User, {
+  foreignKey: 'userId',
+})
+
+User.hasMany(Experience, {
+  foreignKey: 'userId',
+})
+Experience.belongsTo(User, {
+  foreignKey: 'userId',
+})
 
 export default User;

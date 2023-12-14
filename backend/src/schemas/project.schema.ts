@@ -7,6 +7,7 @@ export const CreateProjectSchema = z.object({
     images: z.array(z.string().optional()),
     urlBackend: z.string({ required_error: "La URL del backend es requerida" }),
     urlFrontend: z.string({ required_error: "La URL del frontend es requerida" }),
+    userId: z.string({ required_error: "El ID del usuario es requerido" }),
   })
 })
 
