@@ -12,6 +12,8 @@ const postSkill = async (req: Request<unknown, unknown, CreateSkillType>, res: R
       bodySkill = { ...bodySkill, image: urlCloudinary };
     }
     const saveSkill = await insertSkill(bodySkill);
+    const { userId } = req.body;
+    saveSkill.addUser(userId)
     res.status(200).json(saveSkill);
   } catch (error) {
     res.status(500).json([{ code: "Controller Server", message: "Error en el servidor" }]);

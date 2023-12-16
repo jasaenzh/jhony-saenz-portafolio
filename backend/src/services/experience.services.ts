@@ -1,11 +1,19 @@
 import { ExperienceInterface } from "../interfaces/experience.interface";
 import Experience from "../models/experience.model";
 import { CreateExperienceType, IdExperienceParamsType, UpdateExperienceBodyType } from "../schemas/experience.schema"
+import { convertToSequelizeDate } from "../utils/converStringToDate";
 
 
 const insertExperience = async (bodyExperience: CreateExperienceType): Promise<ExperienceInterface> => {
   const { company, currently, description, position, startDate, endDate } = bodyExperience;
-  const newExperience = await Experience.create({ company, currently, description, position, startDate, endDate });
+  const newExperience = await Experience.create({
+    company,
+    currently,
+    description,
+    position,
+    startDate: convertToSequelizeDate(startDate),
+    endDate
+  });
   return newExperience
 }
 

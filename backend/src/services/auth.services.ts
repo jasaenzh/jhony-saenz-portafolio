@@ -2,6 +2,7 @@ import { AuthInterface } from "../interfaces/auth.interface";
 import { UserInterface } from "../interfaces/user.interface";
 import User from "../models/user.model";
 import { AuthType, LoginType } from "../schemas/auth.schema";
+import { convertToSequelizeDate } from "../utils/converStringToDate";
 import { encrypt, verified } from "../utils/hashPwd.handle";
 import { generateToken } from "../utils/jwt.handle";
 
@@ -21,14 +22,6 @@ const registerServiceNewUser = async ({
   if (findUser) {
     throw new Error("Usuario ya existe!");
   }
-
-  const convertToSequelizeDate = (dateString: string) => {
-    const day = dateString.split("/")[0];
-    const month = dateString.split("/")[1];
-    const year = dateString.split("/")[2];
-    const formattedDate = `${year}-${month}-${day} 00:00:00`;
-    return new Date(formattedDate);
-  };
 
   const pwdHash = await encrypt(password);
 

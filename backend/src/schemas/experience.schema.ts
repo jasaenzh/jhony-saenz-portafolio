@@ -6,8 +6,8 @@ export const CreateExperienceSchema = z.object({
     company: z.string({ required_error: "Nombre de la compañia es requerido" }).min(3, "La posicion debe de contener por lo menos 3 caracteres"),
     currently: z.boolean(),
     description: z.string({ required_error: "Descripcion del trabajo es requerido" }),
-    startDate: z.date(),
-    endDate: z.date().optional(),
+    startDate: z.string(),
+    endDate: z.string().optional(),
     userId: z.string({ required_error: "El ID del usuario es requerido" }),
   })
 })

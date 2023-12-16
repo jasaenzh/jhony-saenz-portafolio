@@ -65,7 +65,7 @@ const User = sequelize.define<UserModel>(
 User.belongsToMany(Skill, {
   through: "UserSkill",
   foreignKey: "userId",
-  otherKey: 'skilltId',
+  otherKey: 'skillId',
 });
 Skill.belongsToMany(User, {
   through: "UserSkill",

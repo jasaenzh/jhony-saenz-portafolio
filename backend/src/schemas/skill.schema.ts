@@ -7,6 +7,7 @@ export const CreateSkillSchema = z.object({
       .min(3, "El nombre debe de contener al menos 3 caracteres"),
     description: z.string({ required_error: "Descripcion es requerida" }),
     image: z.string().optional(),
+    userId: z.string().optional(),
   }),
 });
 
@@ -15,6 +16,7 @@ export const UpdateAndDeleteSkillSchema = z.object({
     nameSkill: z.string().optional(),
     description: z.string().optional(),
     image: z.string().optional(),
+    userId: z.string().optional(),
   }),
   params: z.object({
     id: z.string().min(3).max(36, "El ID no debe de ser mayo a 36 caracteres"),

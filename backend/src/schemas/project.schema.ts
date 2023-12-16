@@ -4,7 +4,7 @@ export const CreateProjectSchema = z.object({
   body: z.object({
     projectName: z.string({ required_error: "Nombre del proyecto es requerido" }).min(3, "El nombre del proyecto debe de contener por lo menos 3 caracteres"),
     description: z.string({ required_error: "Descripción del proyecto es requerido" }).min(3, "La descripción del proyecto debe de contener por lo menos 3 caracteres"),
-    images: z.array(z.string().optional()),
+    images: z.array(z.string().optional()).optional(),
     urlBackend: z.string({ required_error: "La URL del backend es requerida" }),
     urlFrontend: z.string({ required_error: "La URL del frontend es requerida" }),
     userId: z.string({ required_error: "El ID del usuario es requerido" }),

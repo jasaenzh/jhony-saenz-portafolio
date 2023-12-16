@@ -1,32 +1,38 @@
 import { UserInterface } from "../interfaces/user.interface";
+import Experience from "../models/experience.model";
+import Project from "../models/project.model";
 import Skill from "../models/skill.model";
 import User from "../models/user.model";
 import { BodyUserType, ParamsUserType } from "../schemas/user.schemas";
 
 const findAllUsers = async (): Promise<UserInterface[]> => {
   const users = await User.findAll({
-    attributes: { exclude: ["password"] },
+    attributes: { exclude: ["password", "createdAt", "updatedAt"] },
     include: [
       {
-        model: Skill,
-        attributes: { exclude: ["id"] },
-        through: { attributes: [] },
+        model: Project,
+        attributes: {
+          exclude: ["id", "userId", "createdAt", "updatedAt"]
+        }
       },
-      // {
-      //   model: Project
-      // },
-      // {
-      //   model: Experience
-      // }
-    ],
+      {
+        model: Experience,
+        attributes: {
+          exclude: ["id", "userId"]
+        },
+      },
+      {
+        model: Skill,
+        attributes: {
+          exclude: ["id"]
+        },
+        through: { attributes: [] } // quita todos los atributos de la relacion
+      }
+    ]
   });
   return users;
 };
 
-// const findAllUsers = async (): Promise<UserInterface[]> => {
-//   const users = await User.findAll();
-//   return users;
-// };
 
 const findUserByIdController = async ({
   id,
