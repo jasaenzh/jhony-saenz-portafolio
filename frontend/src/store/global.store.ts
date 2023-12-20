@@ -28,7 +28,7 @@ interface Skills {
   image: string,
 }
 
-interface Users {
+export interface Users {
   id: string,
   firstName: string,
   secondName: string,
@@ -68,7 +68,6 @@ const globalStore = createWithEqualityFn<GlobalStoreInterface>((set, get) => ({
     try {
       const res = await axios.get("http://localhost:3001/api/users")
       const users = await res.data
-      console.log(users);
       set(state => ({
         ...state,
         users

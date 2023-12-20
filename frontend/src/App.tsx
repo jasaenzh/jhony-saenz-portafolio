@@ -9,20 +9,22 @@ function App() {
 
   const { getUsers } = globalStore();
   const menuOpen = globalStore((state) => state.menuOpen)
-
-  console.log("MENU OPEN APP.TSX", menuOpen);
+  const users = globalStore((state) => state.users)
 
   useEffect(() => {
     getUsers()
   }, [getUsers])
 
+  console.log("USER DESDE APP.TSX", users);
+  console.log(typeof users);
+
   return (
     <BrowserRouter>
-      <Layout menuOpen={menuOpen}>
+      <Layout>
         <Routes>
 
           {/* Rutas Publicas */}
-          <Route path="/" element={<Home menuOpen={menuOpen} />} />
+          <Route path="/" element={<Home menuOpen={menuOpen} users={users} />} />
 
         </Routes>
       </Layout>

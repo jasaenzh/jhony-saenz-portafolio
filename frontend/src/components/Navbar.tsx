@@ -8,12 +8,8 @@ interface Link {
   link: string;
 }
 
-interface NavbarProps {
-  menuOpen: boolean;
-}
 
-
-function Navbar({ menuOpen }: NavbarProps) {
+function Navbar() {
 
   const { setMenuOpen } = globalStore();
 
@@ -22,8 +18,7 @@ function Navbar({ menuOpen }: NavbarProps) {
     users: state.users
   }))
 
-  console.log("MENU OPEN NAVBAR", menuOpen);
-  console.log(users);
+  console.log("Usuarios desde Navbar", users);
 
 
   const [open, setOpen] = useState(false);
