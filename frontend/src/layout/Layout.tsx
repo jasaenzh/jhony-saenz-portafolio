@@ -4,17 +4,16 @@ import { Footer } from "../components/Footer";
 
 interface LayoutProps {
   children: ReactNode;
+  menuOpen: boolean;
 }
 
-function Layout({ children }: LayoutProps) {
+function Layout({ children, menuOpen }: LayoutProps) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <Navbar />
-      <div style={{ flex: 1 }}>
-        <main>
-          {children}
-        </main>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <Navbar menuOpen={menuOpen} />
+      <main className="bg-red-300 mx-6 mt-16 flex-1 h-full">
+        {children}
+      </main>
       <Footer />
     </div>
   );

@@ -3,10 +3,14 @@ import './App.css'
 import { globalStore } from './store/global.store';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Layout } from './layout/Layout';
+import { Home } from './pages/Home';
 
 function App() {
 
   const { getUsers } = globalStore();
+  const menuOpen = globalStore((state) => state.menuOpen)
+
+  console.log("MENU OPEN APP.TSX", menuOpen);
 
   useEffect(() => {
     getUsers()
@@ -14,11 +18,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Layout>
+      <Layout menuOpen={menuOpen}>
         <Routes>
 
           {/* Rutas Publicas */}
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<Home menuOpen={menuOpen} />} />
 
         </Routes>
       </Layout>

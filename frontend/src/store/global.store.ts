@@ -46,8 +46,10 @@ interface Users {
 
 interface GlobalStoreInterface {
   count: number,
+  menuOpen: boolean,
   isAuthenticated: boolean,
   increment: (value: number) => void,
+  setMenuOpen: (value: boolean) => void,
   users: Users[]
   getUsers: () => Promise<void>
   multiply: (value: number) => void,
@@ -55,11 +57,13 @@ interface GlobalStoreInterface {
 
 const globalStore = createWithEqualityFn<GlobalStoreInterface>((set, get) => ({
   count: 10,
+  menuOpen: false,
   isAuthenticated: false,
   users: [],
   increment: (value: number) => set(state => ({
     count: state.count + value
   })),
+  setMenuOpen: (value: boolean) => set({ menuOpen: value }),
   getUsers: async () => {
     try {
       const res = await axios.get("http://localhost:3001/api/users")

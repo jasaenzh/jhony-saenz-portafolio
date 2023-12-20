@@ -8,22 +8,31 @@ interface Link {
   link: string;
 }
 
+interface NavbarProps {
+  menuOpen: boolean;
+}
 
-function Navbar() {
+
+function Navbar({ menuOpen }: NavbarProps) {
+
+  const { setMenuOpen } = globalStore();
 
   const { isAuthenticated, users } = globalStore((state) => ({
     isAuthenticated: state.isAuthenticated,
     users: state.users
   }))
 
-  console.log("USERS", users);
+  console.log("MENU OPEN NAVBAR", menuOpen);
+  console.log(users);
 
 
   const [open, setOpen] = useState(false);
   const [linksToShow, setLinksToShow] = useState<Link[]>([]);
 
+
   const toggleMenu = () => {
     setOpen(!open);
+    setMenuOpen(!open)
   };
 
   const closeMenu = () => {
@@ -80,7 +89,15 @@ function Navbar() {
 
       {/* Lista de enlaces */}
       <div className="md:py-1 py-4 sm:px-8">
-        <ul className={`md:flex gap-16 justify-end md:items-center md:pb-0 pb-2 absolute md:static md:z-auto left-0 w-full md:pl-0 pl-5 transition-all duration-0 ease-in ${open ? 'top-16 opacity-100' : 'top-[-490px]'}`} onClick={closeMenu} >
+        <ul
+          className={`md:flex gap-16 justify-end md:items-center md:pb-0 pb-2 absolute md:static md:z-auto left-0 w-full md:pl-0 pl-6 transition-all duration-0 ease-in
+            ${open
+              ? 'top-16 opacity-100 font-bold text-xl'
+              : 'top-[-490px] text-2xl font-bold '
+            }`
+          }
+          onClick={closeMenu}
+        >
           {linksToShow.map((link, index) => {
             return (
               <li key={index}>
