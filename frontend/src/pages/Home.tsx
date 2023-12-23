@@ -31,6 +31,7 @@ function Home({ menuOpen, users }: HomeProps) {
   return (
     <div className={`${marginTopClass}`}>
 
+      {/* Encabezado */}
       <div className="bg-green-800 mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4 p-4">
 
         {/* Div 1: Imagen */}
@@ -81,6 +82,66 @@ function Home({ menuOpen, users }: HomeProps) {
 
       </div>
 
+      {/* Estudios Habilidades y Experiencia */}
+      <div className="bg-green-800 mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4 p-4 w-full">
+
+        {/* Estudios y Habilidades */}
+        <div className="bg-blue-200 grid grid-cols-1">
+          {/* Habilidades */}
+          <div className="bg-amber-300">
+            <h1 className="text-2xl font-extrabold text-center p5">
+              Habilidades
+            </h1>
+            <div className="bg-slate-400">
+              <ul className="bg-lime-200 p-4">
+                {firstUser?.Skills.map((skill, index) => (
+                  <li className="bg-purple-300 flex items-center justify-between" key={index}>
+                    <span className="text-xl">{skill.nameSkill}</span>
+                    <img className="w-10 h-10 m-1" src={skill.image} alt="" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Estudios */}
+          <div className="bg-teal-500">
+            <h1 className="text-2xl font-extrabold text-center p5">
+              Educación
+            </h1>
+            <div className="bg-slate-400">
+              <ul className="bg-orange-200 p-4">
+                <li className="grid grid-cols-2 bg-slate-300">
+                  <span>Institución educativa</span> <span>Universidad de Politecnico</span>
+                  <span>Título</span> <span>Ingeniería en Sistemas</span>
+                  <p>2020 - 2024</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Experiencia */}
+        <div className="bg-rose-300 md:col-span-2 h-full">
+          <h1 className="text-2xl font-extrabold text-center p5">
+            Experiencias
+          </h1>
+          <div className="bg-slate-400 p-4 mt-2">
+            <ul className="bg-red-300">
+              {firstUser?.Experiences.map((experience, index) => (
+                <li className="bg-slate-300 p-4" key={index}>
+                  <h1 className="text-xl font-bold">{experience.position}</h1>
+                  <h3>{experience.company}</h3>
+                  <p>{experience.startDate} - {experience.currently === false ? experience.endDate : "Actualmente"}</p>
+                  <p>{experience.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   );
