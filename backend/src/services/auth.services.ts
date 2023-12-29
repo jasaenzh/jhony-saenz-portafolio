@@ -41,32 +41,39 @@ const registerServiceNewUser = async ({
 };
 
 const loginServiceUser = async ({ email, password }: LoginType) => {
-  const findUser = await User.findOne({ where: { email: email } });
+  try {
+    const findUser = await User.findOne({ where: { email: email } });
 
-  if (!findUser) {
-    throw new Error("Usuario no existe!");
+    if (!findUser) {
+      throw new Error("Usuario no existe!");
+    }
+
+    // Tomo la contraseña encriptada
+    const passEncrypt = findUser.password;
+
+    const isCorrect = await verified(password, passEncrypt);
+
+    if (!isCorrect) {
+      throw new Error("Datos incorrectos!");
+    }
+
+    // Tomo el id que me devuelve
+    const id = findUser.dataValues.id;
+
+    const token = await generateToken(id);
+
+    const data = {
+      token,
+      userId: id,
+    };
+
+    return data;
+
+  } catch (error) {
+    // Aquí podrías imprimir el error para depuración
+    console.error("Error en loginServiceUser:", error);
+    throw error; // Re-lanzar el error
   }
-
-  // Tomo la contraseña encriptada
-  const passEncrypt = findUser.password;
-
-  const isCorrect = await verified(password, passEncrypt);
-
-  if (!isCorrect) {
-    throw new Error("Datos incorrectos!");
-  }
-
-  // Tomo el id que me devuelve
-  const id = findUser.dataValues.id;
-
-  const token = await generateToken(id);
-
-  const data = {
-    token,
-    userId: id,
-  };
-
-  return data;
 };
 
 export { registerServiceNewUser, loginServiceUser };

@@ -13,12 +13,9 @@ function Navbar() {
 
   const { setMenuOpen } = globalStore();
 
-  const { isAuthenticated, users } = globalStore((state) => ({
+  const { isAuthenticated, } = globalStore((state) => ({
     isAuthenticated: state.isAuthenticated,
-    users: state.users
   }))
-
-  console.log("Usuarios desde Navbar", users);
 
 
   const [open, setOpen] = useState(false);
@@ -68,9 +65,7 @@ function Navbar() {
 
     if (isAuthenticated) {
       setLinksToShow(LinksAdmin)
-      console.log("Esta Autenticado");
     } else {
-      console.log("No esta Autenticado");
       setLinksToShow(LinksUser)
     }
   }, [isAuthenticated])
